@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Student Registration Form</h2>
+        <form method="POST">
+
+            <!-- Name -->
+            <div class="mb-3">
+                <label class="form-label">Name</label>
+                <input type="text" class="form-control" name="name" required>
+            </div>
+
+            <!-- Registration Number -->
+            <div class="mb-3">
+                <label class="form-label">Registration Number</label>
+                <input type="text" class="form-control" name="reg_no" required>
+            </div>
+
+            <!-- 1. Biometric Verification -->
+            <div class="mb-3">
+                <label class="form-label">1. Biometric Verification completed</label>
+                <div class="btn-group">
+                    <input type="radio" class="btn-check" name="biometric" value="Yes" id="bioYes" checked>
+                    <label class="btn btn-outline-primary" for="bioYes">Yes</label>
+                    <input type="radio" class="btn-check" name="biometric" value="No" id="bioNo">
+                    <label class="btn btn-outline-primary" for="bioNo">No</label>
+                </div>
+            </div>
+
+            <!-- 2. Gender -->
+            <div class="mb-3">
+                <label class="form-label">2. Gender</label>
+                <div class="btn-group">
+                    <input type="radio" class="btn-check" name="gender" value="Male" id="male" checked>
+                    <label class="btn btn-outline-primary" for="male">Male</label>
+                    <input type="radio" class="btn-check" name="gender" value="Female" id="female">
+                    <label class="btn btn-outline-primary" for="female">Female</label>
+                    <input type="radio" class="btn-check" name="gender" value="Other" id="other">
+                    <label class="btn btn-outline-primary" for="other">Other</label>
+                </div>
+            </div>
+
+            <!-- 3. Recent Photographs -->
+            <div class="mb-3">
+                <label class="form-label">3. Two recent photographs (with Registration Number on the back)</label>
+                <div class="btn-group">
+                    <input type="radio" class="btn-check" name="photos" value="Yes" id="photoYes" checked>
+                    <label class="btn btn-outline-primary" for="photoYes">Yes</label>
+                    <input type="radio" class="btn-check" name="photos" value="No" id="photoNo">
+                    <label class="btn btn-outline-primary" for="photoNo">No</label>
+                </div>
+            </div>
+
+            <!-- 4. Original Marksheet (Class-X) -->
+            <div class="mb-3">
+                <label class="form-label">4. Original Marksheet (Class-X) shown for verification and self-attested copy
+                    submitted</label>
+                <div class="btn-group">
+                    <input type="radio" class="btn-check" name="marksheet_x" value="Yes" id="marksheetXYes" checked>
+                    <label class="btn btn-outline-primary" for="marksheetXYes">Yes</label>
+                    <input type="radio" class="btn-check" name="marksheet_x" value="No" id="marksheetXNo">
+                    <label class="btn btn-outline-primary" for="marksheetXNo">No</label>
+                </div>
+            </div>
+
+            <!-- 5. Original Mark-sheet (Class-XII) -->
+            <div class="mb-3">
+                <label class="form-label">5. Original Marksheet (Class-XII) shown for verification and self-attested
+                    copy submitted</label>
+                <div class="btn-group">
+                    <input type="radio" class="btn-check" name="marksheet_xii" value="Yes" id="marksheetXiiYes" checked>
+                    <label class="btn btn-outline-primary" for="marksheetXiiYes">Yes</label>
+                    <input type="radio" class="btn-check" name="marksheet_xii" value="No" id="marksheetXiiNo">
+                    <label class="btn btn-outline-primary" for="marksheetXiiNo">No</label>
+                </div>
+            </div>
+
+            <!-- 6. Duration of Degree Course (Number Input) -->
+            <div class="mb-3">
+                <label class="form-label">6. Duration of Degree Course (In Years)</label>
+                <input type="number" class="form-control" name="degree_duration" min="1" required>
+            </div>
+
+            <!-- 6a. Original Degree Mark-sheet -->
+            <div class="mb-3">
+                <label class="form-label">6a. Original Degree Marksheet shown for verification and self-attested copy
+                    submitted</label>
+                <div class="btn-group">
+                    <input type="radio" class="btn-check" name="degree_marksheet" value="Yes" id="degreeMarksheetYes"
+                        checked>
+                    <label class="btn btn-outline-primary" for="degreeMarksheetYes">Yes</label>
+                    <input type="radio" class="btn-check" name="degree_marksheet" value="No" id="degreeMarksheetNo">
+                    <label class="btn btn-outline-primary" for="degreeMarksheetNo">No</label>
+                </div>
+            </div>
+
+            <!-- 6b. Original Degree Certificate -->
+            <div class="mb-3">
+                <label class="form-label">6b. Original Degree Certificate shown for verification and self-attested copy
+                    submitted</label>
+                <div class="btn-group">
+                    <input type="radio" class="btn-check" name="degree_certificate" value="Yes"
+                        id="degreeCertificateYes" checked>
+                    <label class="btn btn-outline-primary" for="degreeCertificateYes">Yes</label>
+                    <input type="radio" class="btn-check" name="degree_certificate" value="No" id="degreeCertificateNo">
+                    <label class="btn btn-outline-primary" for="degreeCertificateNo">No</label>
+                </div>
+            </div>
+
+            <!-- 6c. Provisional Degree Certificate -->
+            <div class="mb-3">
+                <label class="form-label">6c. Provisional Degree Certificate submitted in case Original Certificate is
+                    not available at the time of registration</label>
+                <div class="btn-group">
+                    <input type="radio" class="btn-check" name="provisional_degree" value="Yes" id="provisionalYes">
+                    <label class="btn btn-outline-primary" for="provisionalYes">Yes</label>
+                    <input type="radio" class="btn-check" name="provisional_degree" value="No" id="provisionalNo">
+                    <label class="btn btn-outline-primary" for="provisionalNo">No</label>
+                    <input type="radio" class="btn-check" name="provisional_degree" value="NA" id="provisionalNA"
+                        checked>
+                    <label class="btn btn-outline-primary" for="provisionalNA">NA</label>
+                </div>
+            </div>
+
+            <!-- 6d. Whether 50% marks obtained -->
+            <div class="mb-3">
+                <label class="form-label">6d. Whether 50% marks obtained (45% for SC/ST/PwD) at the Graduation
+                    level</label>
+                <div class="btn-group">
+                    <input type="radio" class="btn-check" name="marks_obtained" value="Yes" id="marksObtainedYes"
+                        checked>
+                    <label class="btn btn-outline-primary" for="marksObtainedYes">Yes</label>
+                    <input type="radio" class="btn-check" name="marks_obtained" value="No" id="marksObtainedNo">
+                    <label class="btn btn-outline-primary" for="marksObtainedNo">No</label>
+                </div>
+            </div>
+
+            <!-- Status of Graduation -->
+            <div class="mb-3">
+                <label class="form-label">If (6a) or (6b) along with (6c) are not complete, please mention the status of
+                    Graduation very clearly:</label>
+                <input type="text" class="form-control" name="graduation_status">
+            </div>
+
+            <!-- 7. Incomplete Graduation Certificate Submission -->
+            <div class="mb-3">
+                <label class="form-label">7. In case of Incomplete Graduation: If certificate from the Head of the
+                    Institution (or any other authorized official) in the prescribed form (Enclosure – II)
+                    submitted</label>
+                <div class="btn-group">
+                    <input type="radio" class="btn-check" name="incomplete_graduation_cert" value="Yes"
+                        id="incompleteGradYes">
+                    <label class="btn btn-outline-primary" for="incompleteGradYes">Yes</label>
+                    <input type="radio" class="btn-check" name="incomplete_graduation_cert" value="No"
+                        id="incompleteGradNo">
+                    <label class="btn btn-outline-primary" for="incompleteGradNo">No</label>
+                    <input type="radio" class="btn-check" name="incomplete_graduation_cert" value="NA"
+                        id="incompleteGradNA" checked>
+                    <label class="btn btn-outline-primary" for="incompleteGradNA">NA</label>
+                </div>
+            </div>
+
+
+            <div class="mb-3">
+                <label class="form-label">8. Graduation Area</label>
+                <select class="form-select" name="graduation_area" required>
+                    <option value="" selected disabled>Select the appropriate Graduation Area</option>
+                    <option value="Engineering">Engineering</option>
+                    <option value="Science">Science</option>
+                    <option value="Commerce">Commerce</option>
+                    <option value="Arts">Arts</option>
+                    <option value="Others">Others</option>
+                </select>
+            </div>
+
+            <!-- 9. Candidates with work experience -->
+            <div class="mb-3">
+                <label class="form-label">9. Candidates with work experience: If, employer’s Release Certificate or
+                    Resignation Acceptance submitted for verification</label>
+                <div class="btn-group">
+                    <input type="radio" class="btn-check" name="work_experience_certificate" value="Yes"
+                        id="workExperienceYes" checked>
+                    <label class="btn btn-outline-primary" for="workExperienceYes">Yes</label>
+                    <input type="radio" class="btn-check" name="work_experience_certificate" value="No"
+                        id="workExperienceNo">
+                    <label class="btn btn-outline-primary" for="workExperienceNo">No</label>
+                    <input type="radio" class="btn-check" name="work_experience_certificate" value="NA"
+                        id="workExperienceNA">
+                    <label class="btn btn-outline-primary" for="workExperienceNA">NA</label>
+                </div>
+            </div>
+
+            <!-- Reason text field (shown only if "No" is selected) -->
+            <div class="mb-3" id="reasonField" style="display: none;">
+                <label class="form-label">If 'No', please state the reason(s) thereof & due date for submission:</label>
+                <input type="text" class="form-control" name="reason_for_no" placeholder="Enter reason and due date">
+            </div>
+
+            <!-- 10. SC/ST/NC-OBC/PwD/EWS Candidates - Original Certificate Verification -->
+            <div class="mb-3">
+                <label class="form-label">10. For SC/ST/NC-OBC/PwD/EWS Candidates:</label>
+
+                <label class="form-label">(a) Original Certificate shown for verification and attested copy
+                    submitted</label>
+                <div class="btn-group">
+                    <input type="radio" class="btn-check" name="category_certificate" value="Yes" id="catCertYes">
+                    <label class="btn btn-outline-primary" for="catCertYes">Yes</label>
+                    <input type="radio" class="btn-check" name="category_certificate" value="No" id="catCertNo">
+                    <label class="btn btn-outline-primary" for="catCertNo">No</label>
+                    <input type="radio" class="btn-check" name="category_certificate" value="NA" id="catCertNA" checked>
+                    <label class="btn btn-outline-primary" for="catCertNA">NA</label>
+                </div>
+            </div>
+
+            <!-- 10(b). PwD Candidates - Enclosure VII Submission -->
+            <div class="mb-3">
+                <label class="form-label">(b) Enclosure – VII (for PwD candidate) submitted</label>
+                <div class="btn-group">
+                    <input type="radio" class="btn-check" name="pwd_enclosure" value="Yes" id="pwdEncYes">
+                    <label class="btn btn-outline-primary" for="pwdEncYes">Yes</label>
+                    <input type="radio" class="btn-check" name="pwd_enclosure" value="No" id="pwdEncNo">
+                    <label class="btn btn-outline-primary" for="pwdEncNo">No</label>
+                    <input type="radio" class="btn-check" name="pwd_enclosure" value="NA" id="pwdEncNA" checked>
+                    <label class="btn btn-outline-primary" for="pwdEncNA">NA</label>
+                </div>
+            </div>
+
+            <!-- 1. Is any Demand Draft Submitted? -->
+            <div class="mb-3">
+                <label class="form-label">11-13. Is any Demand Draft submitted by the student?</label>
+                <div class="btn-group">
+                    <input type="radio" class="btn-check" name="demand_draft_submitted" value="Yes" id="demandDraftYes" onclick="toggleDDFields()">
+                    <label class="btn btn-outline-primary" for="demandDraftYes">Yes</label>
+                    <input type="radio" class="btn-check" name="demand_draft_submitted" value="No" id="demandDraftNo" checked onclick="toggleDDFields()">
+                    <label class="btn btn-outline-primary" for="demandDraftNo">No</label>
+                </div>
+            </div>
+
+            <!-- 2. Demand Draft Amount Dropdown (Hidden Initially) -->
+            <div class="mb-3" id="ddAmountDiv" style="display: none;">
+                <select class="form-select" name="demand_draft_amount">
+                    <option value="" selected disabled>Select the appropriate demand draft submitted</option>
+                    <option value="440000">Demand Draft for INR 440000/- towards balance of 1st Term Fees</option>
+                    <option value="20000">Demand Draft for INR 20000/- towards caution deposit </option>
+                    <option value="460000">Demand Draft for INR 460000/- towards balance of 1st Term Fees and caution deposit</option>
+                </select>
+            </div>
+
+            <!-- 3. Draft No. and DT No. Fields (Hidden Initially) -->
+            <div id="ddDetailsDiv" style="display: none;">
+                <div class="mb-3">
+                    <label class="form-label">Draft No. (6 Digits):</label>
+                    <input type="text" class="form-control" name="draft_no" pattern="\d{6}" maxlength="6" placeholder="Enter 6-digit Draft No.">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">DT No. (6 Digits):</label>
+                    <input type="text" class="form-control" name="dt_no" pattern="\d{6}" maxlength="6" placeholder="Enter 6-digit DT No.">
+                </div>
+            </div>
+
+            <!-- 14. Self attested CAT scorecard -->
+            <div class="mb-3">
+                <label class="form-label">14. Self attested CAT score card</label>
+                <div class="btn-group">
+                    <input type="radio" class="btn-check" name="cat_score_card" value="Yes" id="catScoreCardYes"
+                        checked>
+                    <label class="btn btn-outline-primary" for="catScoreCardYes">Yes</label>
+                    <input type="radio" class="btn-check" name="cat_score_card" value="No" id="catScoreCardNo">
+                    <label class="btn btn-outline-primary" for="catScoreCardNo">No</label>
+                </div>
+            </div>
+
+            <!-- 15. Guardian's Declaration submitted (As per Enclosure – V) -->
+            <div class="mb-3">
+                <label class="form-label">15. Guardian's Declaration submitted (As per Enclosure – V)</label>
+                <div class="btn-group">
+                    <input type="radio" class="btn-check" name="guardians_declaration" value="Yes"
+                        id="guardiansDeclarationYes" checked>
+                    <label class="btn btn-outline-primary" for="guardiansDeclarationYes">Yes</label>
+                    <input type="radio" class="btn-check" name="guardians_declaration" value="No"
+                        id="guardiansDeclarationNo">
+                    <label class="btn btn-outline-primary" for="guardiansDeclarationNo">No</label>
+                </div>
+            </div>
+
+            <!-- 16. Medical Information Form submitted (As per Enclosure – VI) -->
+            <div class="mb-3">
+                <label class="form-label">16. Medical Information Form submitted (As per Enclosure – VI)</label>
+                <div class="btn-group">
+                    <input type="radio" class="btn-check" name="medical_info_form" value="Yes" id="medicalInfoFormYes"
+                        checked>
+                    <label class="btn btn-outline-primary" for="medicalInfoFormYes">Yes</label>
+                    <input type="radio" class="btn-check" name="medical_info_form" value="No" id="medicalInfoFormNo">
+                    <label class="btn btn-outline-primary" for="medicalInfoFormNo">No</label>
+                </div>
+            </div>
+
+            <!-- 17. Personal Data Card submitted -->
+            <div class="mb-3">
+                <label class="form-label">17. Personal Data Card submitted</label>
+                <div class="btn-group">
+                    <input type="radio" class="btn-check" name="personal_data_card" value="Yes" id="personalDataCardYes"
+                        checked>
+                    <label class="btn btn-outline-primary" for="personalDataCardYes">Yes</label>
+                    <input type="radio" class="btn-check" name="personal_data_card" value="No" id="personalDataCardNo">
+                    <label class="btn btn-outline-primary" for="personalDataCardNo">No</label>
+                </div>
+            </div>
+
+            <!-- 18. Campus Rules Declaration submitted (As per Enclosure –VIII) -->
+            <div class="mb-3">
+                <label class="form-label">18. Campus Rules Declaration submitted (As per Enclosure –VIII)</label>
+                <div class="btn-group">
+                    <input type="radio" class="btn-check" name="campus_rules_declaration" value="Yes"
+                        id="campusRulesDeclarationYes" checked>
+                    <label class="btn btn-outline-primary" for="campusRulesDeclarationYes">Yes</label>
+                    <input type="radio" class="btn-check" name="campus_rules_declaration" value="No"
+                        id="campusRulesDeclarationNo">
+                    <label class="btn btn-outline-primary" for="campusRulesDeclarationNo">No</label>
+                </div>
+            </div>
+
+            <!-- 19. Anti-Ragging Form submitted online with hardcopy to PGP Office -->
+            <div class="mb-3">
+                <label class="form-label">19. Anti-Ragging Form submitted online with hardcopy to PGP Office</label>
+                <div class="btn-group">
+                    <input type="radio" class="btn-check" name="anti_ragging_form" value="Yes" id="antiRaggingFormYes"
+                        checked>
+                    <label class="btn btn-outline-primary" for="antiRaggingFormYes">Yes</label>
+                    <input type="radio" class="btn-check" name="anti_ragging_form" value="No" id="antiRaggingFormNo">
+                    <label class="btn btn-outline-primary" for="antiRaggingFormNo">No</label>
+                </div>
+            </div>
+
+            <!-- 20. Declaration form submitted regarding Bank details -->
+            <div class="mb-3">
+                <label class="form-label">20. Declaration form submitted regarding Bank details</label>
+                <div class="btn-group">
+                    <input type="radio" class="btn-check" name="bank_details_declaration" value="Yes"
+                        id="bankDetailsDeclarationYes" checked>
+                    <label class="btn btn-outline-primary" for="bankDetailsDeclarationYes">Yes</label>
+                    <input type="radio" class="btn-check" name="bank_details_declaration" value="No"
+                        id="bankDetailsDeclarationNo">
+                    <label class="btn btn-outline-primary" for="bankDetailsDeclarationNo">No</label>
+                </div>
+            </div>
+
+            <!-- 21. Bank Loan -->
+            <div class="mb-3">
+                <label class="form-label">21. Have you taken a Bank Loan?</label>
+                <div class="btn-group">
+                    <input type="radio" class="btn-check" name="bank_loan" value="Yes" id="loanYes">
+                    <label class="btn btn-outline-primary" for="loanYes">Yes</label>
+                    <input type="radio" class="btn-check" name="bank_loan" value="No" id="loanNo" checked>
+                    <label class="btn btn-outline-primary" for="loanNo">No</label>
+                </div>
+            </div>
+
+            <div id="loanDetails" style="display: none;">
+                <label class="form-label">If Yes, Bank Name:</label>
+                <input type="text" class="form-control" name="bank_name">
+                <label class="form-label">Loan Amount:</label>
+                <input type="number" class="form-control" name="loan_amount">
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-success w-100 mt-3">Submit</button>
+        </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+
+</html>
