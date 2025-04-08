@@ -11,7 +11,6 @@ app = Flask(__name__)
 app.register_blueprint(dashboard_bp)
 app.register_blueprint(main_bp)  # This handles the homepage (/)
 
-
 # Excel file path
 EXCEL_FILE = "students.xlsx"
 TEMPLATE_PATH = "templates/template.docx"  # Path to the Word template
@@ -139,7 +138,23 @@ def index():
                 if "{date}" in paragraph.text:
                     paragraph.text = paragraph.text.replace("{date}", today_date)
                 if "{remarks}" in paragraph.text:
-                    paragraph.text = paragraph.text.replace("{remarks}", student_data["Remarks"])
+                    paragraph.text = paragraph.text.replace("{remarks}", student_data["reason_photos"] + " " +
+                                                            student_data["reason_marksheet_x"] + " " +
+                                                            student_data["reason_marksheet_xii"] + " " +
+                                                            student_data["reason_degree_marksheet"] + " " +
+                                                            student_data["reason_degree_certificate"] + " " +
+                                                            student_data["reason_provisional_degree"] + " " +
+                                                            student_data["reason_incomplete_graduation"] + " " +
+                                                            student_data["reason_category_certificate"] + " " +
+                                                            student_data["reason_pwd_enclosure"] + " " +
+                                                            student_data["reason_cat_score_card"] + " " +
+                                                            student_data["reason_guardians_declaration"] + " " +
+                                                            student_data["reason_medical_info_form"] + " " +
+                                                            student_data["reason_personal_data_card"] + " " +
+                                                            student_data["reason_campus_rules_declaration"] + " " +
+                                                            student_data["reason_anti_ragging_form"] + " " +
+                                                            student_data["reason_bank_details_declaration"]
+                                                            )
 
                 # Handling the genders
                 if "{gm}" in paragraph.text:
