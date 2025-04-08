@@ -1,0 +1,40 @@
+.column-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.sort-arrow {
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: 5px;
+}
+
+/* Align Download Button */
+.d-flex {
+    margin-bottom: 10px;
+}
+
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+table thead th {
+    background-color: #2c3e50 !important; /* Elegant dark blue-gray */
+    color: white !important;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.table-header th:first-child {
+    border-top-left-radius: 6px;
+}
+.table-header th:last-child {
+    border-top-right-radius: 6px;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #e6f2ff !important; /* Soft blue highlight */
+    cursor: pointer;
+}
