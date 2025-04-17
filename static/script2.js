@@ -41,3 +41,13 @@ document.addEventListener("DOMContentLoaded", () => {
 $(document).ready(function () {
     $('.selectpicker').selectpicker();
 });
+
+function confirmClear() {
+    const input = prompt("Type 'CLEAR' to confirm deletion of all data:");
+    if (input === "CLEAR") {
+        return true;  // allow form submission
+    } else {
+        alert("Action canceled. You must type 'CLEAR' exactly.");
+        return false; // prevent form submission
+    }
+}

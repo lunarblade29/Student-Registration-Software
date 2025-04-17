@@ -48,6 +48,14 @@
                 {% endfor %}
                 <button type="submit" class="btn btn-primary">Download Excel</button>
             </form>
+            <form action="/clear" method="POST" style="display:inline;" onsubmit="return confirmClear();">
+                <button type="submit" class="btn btn-warning">Clear All</button>
+            </form>
+<script>
+
+</script>
+
+
         </div>
 
     </div>
@@ -74,6 +82,11 @@
     </table>
     {% endif %}
 
+{% if data %}
+<div style="position: fixed; bottom: 0; width: 100%; background-color: #f1f1f1; padding: 10px; text-align: center; font-weight: bold; border-top: 2px solid #ccc;">
+    Showing {{ row_count }} rows and {{ col_count }} columns
+</div>
+{% endif %}
 
 
 </body>
