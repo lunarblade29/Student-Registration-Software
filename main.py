@@ -24,6 +24,8 @@ ALLOWED_EXTENSIONS = {"xlsx"}
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 today_date = datetime.today().strftime("%d %B %Y")
+academic_year = datetime.today().year
+academic_year2 = datetime.today().year + 2
 
 uploaded_file_data = None
 
@@ -54,6 +56,7 @@ if not os.path.exists(EXCEL_FILE):
             "Graduation Area",
             "Work Experience Certificate Submitted",
             "Work Experience Reason",
+            "Student Category",
             "SC/ST/OBC/PwD Certificate Verification",
             "PwD Enclosure Submitted",
             "Demand Draft Submitted",
@@ -61,6 +64,8 @@ if not os.path.exists(EXCEL_FILE):
             "Draft No.",
             "DT No.",
             "CAT Score Card Verification",
+            "Declaration Form Submitted",
+            "Mathematics in 12th",
             "Guardian's Declaration Submitted",
             "Medical Info Form Submitted",
             "Personal Data Card Submitted",
@@ -81,6 +86,8 @@ if not os.path.exists(EXCEL_FILE):
             "reason_category_certificate",
             "reason_pwd_enclosure",
             "reason_cat_score_card",
+            "reason_undertaking_declaration",
+            "reason_maths_12th",
             "reason_guardians_declaration",
             "reason_medical_info_form",
             "reason_personal_data_card",
@@ -189,6 +196,14 @@ def get_student_info():
     return jsonify({"name": "", "email": ""})
 
 
+def format_date_dd_mm_yyyy(date_str):
+    try:
+        year, month, day = date_str.split('-')
+        return f"{day}-{month}-{year}"
+    except (ValueError, AttributeError):
+        return ""
+
+
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "POST":
@@ -221,6 +236,7 @@ def index():
                     "work_experience_certificate"
                 ),
                 "Work Experience Reason": request.form.get("reason_for_no"),
+                "Student Category": request.form.get("student_category"),
                 "SC/ST/OBC/PwD Certificate Verification": request.form.get(
                     "category_certificate"
                 ),
@@ -242,6 +258,8 @@ def index():
                     else None
                 ),
                 "CAT Score Card Verification": request.form.get("cat_score_card"),
+                "Declaration Form Submitted": request.form.get("undertaking_declaration"),
+                "Mathematics in 12th": request.form.get("maths_12th"),
                 "Guardian's Declaration Submitted": request.form.get(
                     "guardians_declaration"
                 ),
@@ -276,6 +294,8 @@ def index():
                 ),
                 "reason_pwd_enclosure": request.form.get("reason_pwd_enclosure"),
                 "reason_cat_score_card": request.form.get("reason_cat_score_card"),
+                "reason_undertaking_declaration": request.form.get("reason_undertaking_declaration"),
+                "reason_maths_12th": request.form.get("reason_maths_12th"),
                 "reason_guardians_declaration": request.form.get(
                     "reason_guardians_declaration"
                 ),
@@ -312,6 +332,14 @@ def index():
                     paragraph.text = paragraph.text.replace(
                         "{name}", student_data["Name"]
                     )
+                if "{acad_y}" in paragraph.text:
+                    paragraph.text = paragraph.text.replace(
+                        "{acad_y}", str(academic_year)
+                    )
+                if "{acad_yy}" in paragraph.text:
+                    paragraph.text = paragraph.text.replace(
+                        "{acad_yy}", str(academic_year2)
+                    )
                 if "{reg_no}" in paragraph.text:
                     paragraph.text = paragraph.text.replace(
                         "{reg_no}", student_data["Registration Number"]
@@ -332,10 +360,15 @@ def index():
                     paragraph.text = paragraph.text.replace(
                         "{bank_name}", student_data["Bank Name"]
                     )
-                if "{bank_amount}" in paragraph.text:
+                if "{bank_amount}" in paragraph.text and student_data.get("Loan Amount"):
+                    prefix = "₹"  # Example prefix
+                    suffix = " Lakhs"  # Example suffix
+                    loan_amount = str(student_data["Loan Amount"])
                     paragraph.text = paragraph.text.replace(
-                        "{bank_amount}", student_data["Loan Amount"]
+                        "{bank_amount}", f"{prefix}{loan_amount}{suffix}"
                     )
+                elif "{bank_amount}" in paragraph.text:
+                    paragraph.text = paragraph.text.replace("{bank_amount}", "")
                 if "{date}" in paragraph.text:
                     paragraph.text = paragraph.text.replace("{date}", today_date)
                 if "{remarks}" in paragraph.text:
@@ -362,6 +395,10 @@ def index():
                         + student_data["reason_pwd_enclosure"]
                         + " "
                         + student_data["reason_cat_score_card"]
+                        + " "
+                        + student_data["reason_undertaking_declaration"]
+                        + " "
+                        + student_data["reason_maths_12th"]
                         + " "
                         + student_data["reason_guardians_declaration"]
                         + " "
@@ -422,7 +459,7 @@ def index():
                             "{ddt}", student_data["Draft No."]
                         )  # Tick for Yes
                         paragraph.text = paragraph.text.replace(
-                            "{dtt}", student_data["DT No."]
+                            "{dtt}", format_date_dd_mm_yyyy(student_data["DT No."])
                         )  # blank for No
                     else:
                         paragraph.text = paragraph.text.replace(
@@ -449,7 +486,7 @@ def index():
                             "{ddc}", student_data["Draft No."]
                         )  # Tick for Yes
                         paragraph.text = paragraph.text.replace(
-                            "{dtc}", student_data["DT No."]
+                            "{dtc}", format_date_dd_mm_yyyy(student_data["DT No."])
                         )  # blank for No
                     else:
                         paragraph.text = paragraph.text.replace(
@@ -476,7 +513,7 @@ def index():
                             "{ddb}", student_data["Draft No."]
                         )  # Tick for Yes
                         paragraph.text = paragraph.text.replace(
-                            "{dtb}", student_data["DT No."]
+                            "{dtb}", format_date_dd_mm_yyyy(student_data["DT No."])
                         )  # blank for No
                     else:
                         paragraph.text = paragraph.text.replace(
@@ -494,8 +531,8 @@ def index():
 
                 # Handling the streams
                 if (
-                    "{gse}" in paragraph.text
-                    and student_data["Graduation Area"] == "Engineering"
+                        "{gse}" in paragraph.text
+                        and student_data["Graduation Area"] == "Engineering"
                 ):
                     paragraph.text = paragraph.text.replace(
                         "{gse}", "☑"
@@ -513,8 +550,8 @@ def index():
                         "{gso}", "☐"
                     )  # blank for No
                 if (
-                    "{gss}" in paragraph.text
-                    and student_data["Graduation Area"] == "Science"
+                        "{gss}" in paragraph.text
+                        and student_data["Graduation Area"] == "Science"
                 ):
                     paragraph.text = paragraph.text.replace(
                         "{gss}", "☑"
@@ -532,8 +569,8 @@ def index():
                         "{gso}", "☐"
                     )  # blank for No
                 if (
-                    "{gsc}" in paragraph.text
-                    and student_data["Graduation Area"] == "Commerce"
+                        "{gsc}" in paragraph.text
+                        and student_data["Graduation Area"] == "Commerce"
                 ):
                     paragraph.text = paragraph.text.replace(
                         "{gsc}", "☑"
@@ -551,8 +588,8 @@ def index():
                         "{gso}", "☐"
                     )  # blank for No
                 if (
-                    "{gsa}" in paragraph.text
-                    and student_data["Graduation Area"] == "Arts"
+                        "{gsa}" in paragraph.text
+                        and student_data["Graduation Area"] == "Arts"
                 ):
                     paragraph.text = paragraph.text.replace(
                         "{gsa}", "☑"
@@ -570,8 +607,8 @@ def index():
                         "{gso}", "☐"
                     )  # blank for No
                 if (
-                    "{gso}" in paragraph.text
-                    and student_data["Graduation Area"] == "Others"
+                        "{gso}" in paragraph.text
+                        and student_data["Graduation Area"] == "Others"
                 ):
                     paragraph.text = paragraph.text.replace(
                         "{gso}", "☑"
@@ -589,18 +626,52 @@ def index():
                         "{gse}", "☐"
                     )  # blank for No
 
+                # Handling the categories
+                if "{na}" in paragraph.text and student_data.get("Student Category") == "NA":
+                    paragraph.text = paragraph.text.replace("{na}", "☑").replace("{sc}", "☐").replace("{st}",
+                                                                                                      "☐").replace(
+                        "{obc}", "☐").replace("{pwd}", "☐").replace("{ews}", "☐")
+                elif "{sc}" in paragraph.text and student_data.get("Student Category") == "SC":
+                    paragraph.text = paragraph.text.replace("{sc}", "☑").replace("{na}", "☐").replace("{st}",
+                                                                                                      "☐").replace(
+                        "{obc}", "☐").replace("{pwd}", "☐").replace("{ews}", "☐")
+                elif "{st}" in paragraph.text and student_data.get("Student Category") == "ST":
+                    paragraph.text = paragraph.text.replace("{st}", "☑").replace("{na}", "☐").replace("{sc}",
+                                                                                                      "☐").replace(
+                        "{obc}", "☐").replace("{pwd}", "☐").replace("{ews}", "☐")
+                elif "{obc}" in paragraph.text and student_data.get("Student Category") == "OBC":
+                    paragraph.text = paragraph.text.replace("{obc}", "☑").replace("{na}", "☐").replace("{sc}",
+                                                                                                       "☐").replace(
+                        "{st}", "☐").replace("{pwd}", "☐").replace("{ews}", "☐")
+                elif "{pwd}" in paragraph.text and student_data.get("Student Category") == "PwD":
+                    paragraph.text = paragraph.text.replace("{pwd}", "☑").replace("{na}", "☐").replace("{sc}",
+                                                                                                       "☐").replace(
+                        "{st}", "☐").replace("{obc}", "☐").replace("{ews}", "☐")
+                elif "{ews}" in paragraph.text and student_data.get("Student Category") == "EWS":
+                    paragraph.text = paragraph.text.replace("{ews}", "☑").replace("{na}", "☐").replace("{sc}",
+                                                                                                       "☐").replace(
+                        "{st}", "☐").replace("{obc}", "☐").replace("{pwd}", "☐")
+                elif "{na}" in paragraph.text:
+                    paragraph.text = paragraph.text.replace("{na}", "☑").replace("{sc}", "☐").replace("{st}",
+                                                                                                      "☐").replace(
+                        "{obc}", "☐").replace("{pwd}", "☐").replace("{ews}", "☐")
+                elif any(tag in paragraph.text for tag in ["{sc}", "{st}", "{obc}", "{pwd}", "{ews}"]):
+                    paragraph.text = paragraph.text.replace("{sc}", "☐").replace("{st}", "☐").replace("{obc}",
+                                                                                                      "☐").replace(
+                        "{pwd}", "☐").replace("{ews}", "☐").replace("{na}", "☐")
+
             # Helper function to handle Yes/No placeholder replacement
             def handle_checkbox_placeholder(
-                paragraph,
-                placeholder_yes,
-                placeholder_no,
-                placeholder_na,
-                student_data_value,
+                    paragraph,
+                    placeholder_yes,
+                    placeholder_no,
+                    placeholder_na,
+                    student_data_value,
             ):
                 if (
-                    placeholder_yes in paragraph.text
-                    or placeholder_no in paragraph.text
-                    or placeholder_na in paragraph.text
+                        placeholder_yes in paragraph.text
+                        or placeholder_no in paragraph.text
+                        or placeholder_na in paragraph.text
                 ):
                     if student_data_value == "Yes":
                         paragraph.text = paragraph.text.replace(
@@ -690,6 +761,20 @@ def index():
                     "{csn}",
                     "{na}",
                     student_data["CAT Score Card Verification"],
+                )
+                handle_checkbox_placeholder(
+                    paragraph,
+                    "{udy}",
+                    "{udn}",
+                    "{na}",
+                    student_data["Declaration Form Submitted"],
+                )
+                handle_checkbox_placeholder(
+                    paragraph,
+                    "{tsy}",
+                    "{tsn}",
+                    "{na}",
+                    student_data["Mathematics in 12th"],
                 )
                 handle_checkbox_placeholder(
                     paragraph,

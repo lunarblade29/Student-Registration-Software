@@ -637,11 +637,69 @@
           />
         </div>
 
+        <div class="mb-3">
+          <label class="form-label">10. For SC/ST/NC-OBC/PwD/EWS Candidates:</label>
+          <div class="btn-group">
+            <input
+              type="radio"
+              class="btn-check"
+              name="student_category"
+              value="SC"
+              id="studCatSC"
+              data-toggle-field="reason_category_certificate"
+            />
+            <label class="btn btn-outline-primary" for="studCatSC">SC</label>
+            <input
+              type="radio"
+              class="btn-check"
+              name="student_category"
+              value="ST"
+              id="studCatST"
+              data-toggle-field="reason_category_certificate"
+            />
+            <label class="btn btn-outline-primary" for="studCatST">ST</label>
+            <input
+              type="radio"
+              class="btn-check"
+              name="student_category"
+              value="OBC"
+              id="studCatOBC"
+              data-toggle-field="reason_category_certificate"
+            />
+            <label class="btn btn-outline-primary" for="studCatOBC">OBC</label>
+            <input
+              type="radio"
+              class="btn-check"
+              name="student_category"
+              value="PwD"
+              id="studCatPwD"
+              data-toggle-field="reason_category_certificate"
+            />
+            <label class="btn btn-outline-primary" for="studCatPwD">PwD</label>
+            <input
+              type="radio"
+              class="btn-check"
+              name="student_category"
+              value="EWS"
+              id="studCatEWS"
+              data-toggle-field="reason_category_certificate"
+            />
+            <label class="btn btn-outline-primary" for="studCatEWS">EWS</label>
+            <input
+              type="radio"
+              class="btn-check"
+              name="student_category"
+              value="NA"
+              id="studCatNA"
+              checked
+              data-toggle-field="reason_category_certificate"
+            />
+            <label class="btn btn-outline-primary" for="studCatNA">NA</label>
+          </div>
+        </div>
+
         <!-- 10(a). SC/ST/NC-OBC/PwD/EWS Candidates - Original Certificate Verification -->
         <div class="mb-3">
-          <label class="form-label"
-            >10. For SC/ST/NC-OBC/PwD/EWS Candidates:</label
-          >
           <label class="form-label"
             >(a) Original Certificate shown for verification and attested copy
             submitted</label
@@ -814,14 +872,12 @@
             />
           </div>
           <div class="mb-3">
-            <label class="form-label">DT No. (6 Digits):</label>
+            <label class="form-label">Dated on:</label>
             <input
-              type="text"
+              type="date"
               class="form-control"
               name="dt_no"
-              pattern="\d{6}"
-              maxlength="6"
-              placeholder="Enter 6-digit DT No."
+              value="<%= new java.text.SimpleDateFormat(\'dd-MM-yyyy\').format(new java.util.Date()) %>"
             />
           </div>
         </div>
@@ -873,10 +929,97 @@
           />
         </div>
 
+        <!-- Additional = Declaration and 12th math -->
+        <div class="mb-3">
+          <label class="form-label"
+            >15. Undertaking/declaration form submitted regarding personal
+            details</label
+          >
+          <div class="btn-group">
+            <input
+              type="radio"
+              class="btn-check"
+              name="undertaking_declaration"
+              value="Yes"
+              id="undertakingDeclarationYes"
+              data-toggle-field="reason_undertaking_declaration"
+              checked
+            />
+            <label class="btn btn-outline-primary" for="undertakingDeclarationYes"
+              >Yes</label
+            >
+            <input
+              type="radio"
+              class="btn-check"
+              name="undertaking_declaration"
+              value="No"
+              id="undertakingDeclarationNo"
+              data-toggle-field="reason_undertaking_declaration"
+            />
+            <label class="btn btn-outline-primary" for="undertakingDeclarationNo"
+              >No</label
+            >
+          </div>
+        </div>
+        <div
+          class="mb-3 reason-field"
+          id="reason_undertaking_declaration"
+          style="display: none"
+        >
+          <label class="form-label"
+            >If 'No', please state the reason and due date for
+            submission:</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="reason_undertaking_declaration"
+            placeholder="Enter reason and due date"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">16. Mathematics in 12th Standard</label>
+          <div class="btn-group">
+            <input
+              type="radio"
+              class="btn-check"
+              name="maths_12th"
+              value="Yes"
+              id="maths12thYes"
+              data-toggle-field="reason_maths_12th"
+              checked
+            />
+            <label class="btn btn-outline-primary" for="maths12thYes">Yes</label>
+            <input
+              type="radio"
+              class="btn-check"
+              name="maths_12th"
+              value="No"
+              id="maths12thNo"
+              data-toggle-field="reason_maths_12th"
+            />
+            <label class="btn btn-outline-primary" for="maths12thNo">No</label>
+          </div>
+        </div>
+        <div
+          class="mb-3 reason-field"
+          id="reason_maths_12th"
+          style="display: none"
+        >
+          <label class="form-label">If 'No', please state the reason:</label>
+          <input
+            type="text"
+            class="form-control"
+            name="reason_maths_12th"
+            placeholder="Enter reason"
+          />
+        </div>
+
         <!-- 15. Guardian's Declaration Submitted -->
         <div class="mb-3">
           <label class="form-label"
-            >15. Guardian's Declaration submitted (As per Enclosure – V)</label
+            >17. Guardian's Declaration submitted (As per Enclosure – V)</label
           >
           <div class="btn-group">
             <input
@@ -925,7 +1068,7 @@
         <!-- 16. Medical Information Form Submitted -->
         <div class="mb-3">
           <label class="form-label"
-            >16. Medical Information Form submitted (As per Enclosure –
+            >18. Medical Information Form submitted (As per Enclosure –
             VI)</label
           >
           <div class="btn-group">
@@ -974,7 +1117,7 @@
 
         <!-- 17. Personal Data Card Submitted -->
         <div class="mb-3">
-          <label class="form-label">17. Personal Data Card submitted</label>
+          <label class="form-label">19. Personal Data Card submitted</label>
           <div class="btn-group">
             <input
               type="radio"
@@ -1022,7 +1165,7 @@
         <!-- 18. Campus Rules Declaration Submitted -->
         <div class="mb-3">
           <label class="form-label"
-            >18. Campus Rules Declaration submitted (As per Enclosure
+            >20. Campus Rules Declaration submitted (As per Enclosure
             –VIII)</label
           >
           <div class="btn-group">
@@ -1076,7 +1219,7 @@
         <!-- 19. Anti-Ragging Form Submitted -->
         <div class="mb-3">
           <label class="form-label"
-            >19. Anti-Ragging Form submitted online with hardcopy to PGP
+            >21. Anti-Ragging Form submitted online with hardcopy to PGP
             Office</label
           >
           <div class="btn-group">
@@ -1126,7 +1269,7 @@
         <!-- 20. Declaration Form Submitted Regarding Bank Details -->
         <div class="mb-3">
           <label class="form-label"
-            >20. Declaration form submitted regarding Bank details</label
+            >22. Declaration form submitted regarding Bank details</label
           >
           <div class="btn-group">
             <input
@@ -1178,7 +1321,7 @@
 
         <!-- 21. Bank Loan -->
         <div class="mb-3">
-          <label class="form-label">21. Have you taken a Bank Loan?</label>
+          <label class="form-label">23. Have you taken a Bank Loan?</label>
           <div class="btn-group">
             <input
               type="radio"
